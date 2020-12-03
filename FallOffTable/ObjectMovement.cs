@@ -6,9 +6,8 @@ namespace FallOffTable
 {
     public class ObjectMovement
     {
-        private DirectionsModel _direction = DirectionsModel.North;
-        private int _movementX;
-        private int _movementY = -1;
+        private Directions _direction = Directions.North;
+
         private int MovementX
         {
             get
@@ -42,11 +41,13 @@ namespace FallOffTable
                 }
             }
         }
+
         private int PositionX { get; set; }
         private int PositionY { get; set; }
         private readonly Table _table;
-        private enum DirectionsModel
-        {
+        
+        private enum Directions
+        { 
             North, East, South, West
         }
 
@@ -98,72 +99,12 @@ namespace FallOffTable
 
         private void RotateClockwise()
         {
-            switch (_direction)
-            {
-                case DirectionsModel.North:
-                    SetDirectionEast();
-                    break;
-                case DirectionsModel.East:
-                    SetDirectionSouth();
-                    break;
-                case DirectionsModel.South:
-                    SetDirectionWest();
-                    break;
-                case DirectionsModel.West:
-                    SetDirectionNorth();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"Movements integers must be between 1 to 4");
-            }
+            _direction = _direction == Directions.West ? Directions.North : _direction += 1;
         }
 
         private void RotateCounterClockwise()
         {
-            switch (_direction)
-            {
-                case DirectionsModel.North:
-                    SetDirectionWest();
-                    break;
-                case DirectionsModel.East:
-                    SetDirectionNorth();
-                    break;
-                case DirectionsModel.South:
-                    SetDirectionEast();
-                    break;
-                case DirectionsModel.West:
-                    SetDirectionSouth();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"Movements integers must be between 1 to 4");
-            }
-        }
-
-        private void SetDirectionNorth()
-        {
-            _direction = DirectionsModel.North;
-            _movementX = 0;
-            _movementY = -1;
-        }
-
-        private void SetDirectionWest()
-        {
-            _direction = DirectionsModel.West;
-            _movementX = -1;
-            _movementY = 0;
-        }
-
-        private void SetDirectionSouth()
-        {
-            _direction = DirectionsModel.South;
-            _movementX =0;
-            _movementY = 1;
-        }
-
-        private void SetDirectionEast()
-        {
-            _direction = DirectionsModel.East;
-            _movementX = 1;
-            _movementY = 0;
+            _direction = _direction == Directions.North ? Directions.West : _direction -= 1;
         }
     }
 }
