@@ -9,6 +9,39 @@ namespace FallOffTable
         private DirectionsModel _direction = DirectionsModel.North;
         private int _movementX;
         private int _movementY = -1;
+        private int MovementX
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Directions.North:
+                    case Directions.South:
+                        return 0;
+                    case Directions.East:
+                        return 1;
+                    default:
+                        return -1;
+                }
+            }
+        }
+
+        private int MovementY
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Directions.East:
+                    case Directions.West:
+                        return 0;
+                    case Directions.South:
+                        return 1;
+                    default:
+                        return -1;
+                }
+            }
+        }
         private int PositionX { get; set; }
         private int PositionY { get; set; }
         private readonly Table _table;
@@ -53,14 +86,14 @@ namespace FallOffTable
 
         private void MoveForwards()
         {
-            PositionX += _movementX;
-            PositionY += _movementY;
+            PositionX += MovementX;
+            PositionY += MovementY;
         }
 
         private void MoveBackwards()
         {
-            PositionX -= _movementX;
-            PositionY -= _movementY;
+            PositionX -= MovementX;
+            PositionY -= MovementY;
         }
 
         private void RotateClockwise()
